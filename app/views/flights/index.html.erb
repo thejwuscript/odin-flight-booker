@@ -1,12 +1,12 @@
 <h1>Search for Flights</h1>
 
-<%= form_with method: :get do |f| %>
+<%= form_with url: '/flights', method: :get do |f| %>
   <div>
-    <%= f.label :departure_airport_id, "Departure Airport" %>
+    <%= f.label :departure_airport_id, "From" %>
     <%= f.select :departure_airport_id, options_for_select(@departure_options) %>
   </div>
   <div>
-    <%= f.label :arrival_airport_id, "Arrival Airport" %>
+    <%= f.label :arrival_airport_id, "To" %>
     <%= f.select :arrival_airport_id, options_for_select(@arrival_options) %>
   </div>
   <div>
@@ -19,7 +19,18 @@
     <%= f.select :day, options_for_select(@days) %>
     <%= f.select :year, options_for_select(@years) %>
   </div>
+  <br>
   <div>
-    <%= f.submit "Search flights" %>
+    <%= f.submit "Search" %>
   </div>
+<% end %>
+
+<% if @matched_flights.empty? %>
+  <p>No flights found.</p>
+<% else %>
+  <ul>
+  <% @matched_flights.each do |flight| %>
+    <li><%= flight.id %></li>
+  <% end %>
+  </ul>
 <% end %>
