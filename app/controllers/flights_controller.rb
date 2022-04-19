@@ -9,16 +9,18 @@ class FlightsController < ApplicationController
 
     if search_params.to_h.any?
       @matched_flights = Flight.searched_flights(search_params)
-      @depart_code = Airport.find(search_params[:departure_airport_id]).code
-      @arrival_code = Airport.find(search_params[:arrival_airport_id]).code
+      @depart_id = Airport.find(search_params[:departure_airport_id]).id
+      @arrival_id = Airport.find(search_params[:arrival_airport_id]).id
       @travellers = search_params[:travellers]
+      @day = search_params[:day]
+      @month = search_params[:month]
+      @year = search_params[:year]
     end
-
   end
 
   private
 
   def search_params
-    params.permit(:departure_airport_id, :arrival_airport_id, :travellers, :day, :month, :year)
+    params.permit(:departure_airport_id, :arrival_airport_id, :travellers, :day, :month, :year, :commit)
   end
 end

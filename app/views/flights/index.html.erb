@@ -3,21 +3,21 @@
 <%= form_with url: '/flights', method: :get do |f| %>
   <div>
     <%= f.label :departure_airport_id, "From" %>
-    <%= f.select :departure_airport_id, options_for_select(@departure_options), selected: @depart_id %>
+    <%= f.select :departure_airport_id, options_for_select(@departure_options, @depart_id) %>
   </div>
   <div>
     <%= f.label :arrival_airport_id, "To" %>
-    <%= f.select :arrival_airport_id, options_for_select(@arrival_options), selected: @arrival_id %>
+    <%= f.select :arrival_airport_id, options_for_select(@arrival_options, @arrival_id) %>
   </div>
   <div>
     <%= f.label :travellers %>
-    <%= f.select :travellers, [1, 2, 3, 4] %>
+    <%= f.select :travellers, [1, 2, 3, 4], selected: @travellers %>
   </div>
   <div>
     <%= f.label :date %>
-    <%= f.select :month, options_for_select(@months) %>
-    <%= f.select :day, options_for_select(@days) %>
-    <%= f.select :year, options_for_select(@years) %>
+    <%= f.select :month, options_for_select(@months, @month) %>
+    <%= f.select :day, options_for_select(@days, @day) %>
+    <%= f.select :year, options_for_select(@years, @year) %>
   </div>
   <br>
   <div>
@@ -32,7 +32,7 @@
       <%= form.hidden_field :travellers, value: @travellers %>
       <% @matched_flights.each do |flight| %>
         <%= form.radio_button :flight_id, flight.id %>
-        <%= form.label :flight_id, "Flight ##{flight.id} from #{@depart_code} to #{@arrival_code}", value: flight.id %>
+        <%= form.label :flight_id, "Flight ##{flight.id} at #{flight.time.strftime("%I:%M %p")}", value: flight.id %>
       <% end %>
       <br>
       <br>
