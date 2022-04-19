@@ -7,7 +7,12 @@ class FlightsController < ApplicationController
     @months = @dates.map { |date| date.strftime("%B") }.uniq
     @days = @dates.map { |date| date.strftime("%d") }.uniq
 
-    @matched_flights = Flight.searched_flights(search_params) if params
+    if search_params.to_h.any?
+      @matched_flights = Flight.searched_flights(search_params)
+      @depart_id = search_params[:departure_airport_id]
+      @arrival_id = search_params[:arrival_airport_id]
+    end
+
   end
 
   private

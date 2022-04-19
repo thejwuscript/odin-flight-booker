@@ -3,11 +3,11 @@
 <%= form_with url: '/flights', method: :get do |f| %>
   <div>
     <%= f.label :departure_airport_id, "From" %>
-    <%= f.select :departure_airport_id, options_for_select(@departure_options) %>
+    <%= f.select :departure_airport_id, options_for_select(@departure_options), selected: @depart_id %>
   </div>
   <div>
     <%= f.label :arrival_airport_id, "To" %>
-    <%= f.select :arrival_airport_id, options_for_select(@arrival_options) %>
+    <%= f.select :arrival_airport_id, options_for_select(@arrival_options), selected: @arrival_id %>
   </div>
   <div>
     <%= f.label :travellers %>
@@ -25,12 +25,16 @@
   </div>
 <% end %>
 
-<% if @matched_flights.empty? %>
-  <p>No flights found.</p>
-<% else %>
-  <ul>
-  <% @matched_flights.each do |flight| %>
-    <li><%= flight.id %></li>
+<% if @matched_flights %>
+  <%= form_with url: 'bookings/new', method: :get do |f| %>
+    <% if @matched_flights.empty? %>
+      <p>No flights found.</p>
+    <% else %>
+      <ul>
+      <% @matched_flights.each do |flight| %>
+        <li><%= flight.id %></li>
+      <% end %>
+      </ul>
+    <% end %>
   <% end %>
-  </ul>
 <% end %>
