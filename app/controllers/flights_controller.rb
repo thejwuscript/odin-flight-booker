@@ -9,8 +9,9 @@ class FlightsController < ApplicationController
 
     if search_params.to_h.any?
       @matched_flights = Flight.searched_flights(search_params)
-      @depart_id = search_params[:departure_airport_id]
-      @arrival_id = search_params[:arrival_airport_id]
+      @depart_code = Airport.find(search_params[:departure_airport_id]).code
+      @arrival_code = Airport.find(search_params[:arrival_airport_id]).code
+      @travellers = search_params[:travellers]
     end
 
   end
