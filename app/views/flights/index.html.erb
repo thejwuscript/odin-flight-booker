@@ -2,22 +2,22 @@
 
 <%= form_with url: '/flights', method: :get do |f| %>
   <div>
-    <%= f.label :departure_airport_id, "From" %>
-    <%= f.select :departure_airport_id, options_for_select(@departure_options, @depart_id) %>
+    <%= f.label 'search[departure_airport_id]', "From" %>
+    <%= f.select 'search[departure_airport_id]', options_for_select(@departure_options, @depart_id) %>
   </div>
   <div>
-    <%= f.label :arrival_airport_id, "To" %>
-    <%= f.select :arrival_airport_id, options_for_select(@arrival_options, @arrival_id) %>
+    <%= f.label 'search[arrival_airport_id]', "To" %>
+    <%= f.select 'search[arrival_airport_id]', options_for_select(@arrival_options, @arrival_id) %>
   </div>
   <div>
-    <%= f.label :travellers %>
-    <%= f.select :travellers, [1, 2, 3, 4], selected: @travellers %>
+    <%= f.label 'search[travellers]', 'Travellers' %>
+    <%= f.select 'search[travellers]', [1, 2, 3, 4], selected: @travellers %>
   </div>
   <div>
     <%= f.label :date %>
-    <%= f.select :month, options_for_select(@months, @month) %>
-    <%= f.select :day, options_for_select(@days, @day) %>
-    <%= f.select :year, options_for_select(@years, @year) %>
+    <%= f.select 'search[month]', options_for_select(@months, @month) %>
+    <%= f.select 'search[day]', options_for_select(@days, @day) %>
+    <%= f.select 'search[year]', options_for_select(@years, @year) %>
   </div>
   <br>
   <div>

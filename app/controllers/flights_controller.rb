@@ -7,7 +7,7 @@ class FlightsController < ApplicationController
     @months = @dates.map { |date| date.strftime("%B") }.uniq
     @days = @dates.map { |date| date.strftime("%d") }.uniq
 
-    if search_params.to_h.any?
+    if params[:commit]
       @matched_flights = Flight.searched_flights(search_params)
       @depart_id = Airport.find(search_params[:departure_airport_id]).id
       @arrival_id = Airport.find(search_params[:arrival_airport_id]).id
@@ -21,6 +21,6 @@ class FlightsController < ApplicationController
   private
 
   def search_params
-    params.permit(:departure_airport_id, :arrival_airport_id, :travellers, :day, :month, :year, :commit)
+    params.require(:search).permit(:departure_airport_id, :arrival_airport_id, :travellers, :day, :month, :year)
   end
 end
