@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_20_111434) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_20_145830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,12 +22,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_111434) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.bigint "flight_id", null: false
+    t.bigint "flight_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "traveller_id"
     t.index ["flight_id"], name: "index_bookings_on_flight_id"
-    t.index ["traveller_id"], name: "index_bookings_on_traveller_id"
+  end
+
+  create_table "bookings_travellers", force: :cascade do |t|
+    t.bigint "booking_id"
+    t.bigint "traveller_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_bookings_travellers_on_booking_id"
+    t.index ["traveller_id"], name: "index_bookings_travellers_on_traveller_id"
   end
 
   create_table "flights", force: :cascade do |t|
@@ -42,14 +49,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_111434) do
   end
 
   create_table "travellers", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
+    t.string "name", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "bookings", "flights"
-  add_foreign_key "bookings", "travellers"
+  add_foreign_key "bookings_travellers", "bookings"
+  add_foreign_key "bookings_travellers", "travellers"
   add_foreign_key "flights", "airports", column: "arrival_airport_id"
   add_foreign_key "flights", "airports", column: "departure_airport_id"
 end
