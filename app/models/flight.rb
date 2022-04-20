@@ -3,7 +3,6 @@ class Flight < ApplicationRecord
   belongs_to :arrival_airport, class_name: 'Airport'
 
   has_many :bookings
-  has_many :travellers, through: :bookings
 
   def self.searched_flights(hash)
     date = Date.parse("#{hash[:day]} #{hash[:month]} #{hash[:year]}")
