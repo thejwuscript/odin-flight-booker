@@ -5,11 +5,10 @@ class BookingsController < ApplicationController
   def new
     @booking = Booking.new
     @flight = Flight.find(params[:flight_id])
-    @booking.flight = flight
+    @booking.flight = @flight
     # build_booking?
     num = params[:travellers].to_i
-    @travellers = []
-    num.times { @travellers << Traveller.new }
+    num.times { @booking.travellers.build }
   end
 
   def create

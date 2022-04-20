@@ -1,7 +1,24 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
-
-@travellers
-@booking
-@flight
-
+<h1>Create a New Booking</h1>
+<%= form_with model: @booking do |form| %>
+  <p><b>Flight Number</b>: <%= @flight.id %></p>
+  <p><b>Date</b>: <%= @flight.time.strftime('%B %e, %Y') %></p>
+  <p><b>Departure Time</b>: <%= @flight.time.strftime('%l:%M %P') %></p>
+  <p><b>Depart From</b>: <%= @flight.departure_airport.name %></p>
+  <p><b>Arrive At</b>: <%= @flight.arrival_airport.name %></p>
+  <h2><b>Travellers Information:</b></h2>
+  <ul>
+    <%= form.fields_for :travellers do |sub_form| %>
+      Traveller #<%= sub_form.index + 1 %>
+    <li>
+      <%= sub_form.label :name %>
+      <%= sub_form.text_field :name %>
+    </li>
+    <li>
+      <%= sub_form.label :email %>
+      <%= sub_form.text_field :email %>
+    </li>
+    <br>
+    <% end %>
+  </ul>
+  <%= form.submit %>
+<% end %>
