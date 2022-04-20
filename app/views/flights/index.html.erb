@@ -31,10 +31,13 @@
     <%= form_with url: 'bookings/new', method: :get do |form| %>
       <%= form.hidden_field :travellers, value: @travellers %>
       <% @matched_flights.each do |flight| %>
-        <%= form.radio_button :flight_id, flight.id %>
-        <%= form.label :flight_id, "Flight ##{flight.id} at #{flight.time.strftime("%I:%M %p")}", value: flight.id %>
+        <ul>
+          <li>
+            <%= form.radio_button :flight_id, flight.id %>
+            <%= form.label :flight_id, "Flight ##{flight.id} at #{flight.time.strftime("%I:%M %p")}", value: flight.id %>
+          </li>
+        </ul>
       <% end %>
-      <br>
       <br>
       <%= form.submit "Book flight", style: "display: block" %>
     <% end %>
